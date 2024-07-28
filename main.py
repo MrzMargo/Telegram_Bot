@@ -11,7 +11,8 @@ def send_welcome(message):
     review_button = telebot.types.KeyboardButton('Rate Bot')
     begin_button = telebot.types.KeyboardButton('Begin')
     keyboard.add(help_button, review_button, begin_button)
-
+    bot.send_message(chat_id=message.chat.id, text="Hello, my name is Monica. I'll help you clean your mind:3",
+                     reply_markup=keyboard)
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     if message.text == "Help":
