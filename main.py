@@ -1,20 +1,21 @@
 import telebot
 import page
-# Замените 'YOUR_BOT_TOKEN' на ваш токен бота, полученный от BotFather
 BOT_TOKEN = page.TOKEN
 
-# Создание экземпляра бота
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# Обработчик команды /start
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "Привет! Я простой бот. Попробуйте отправить мне любое сообщение.")
+    keyboard = telebot.types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+    help_button = telebot.types.KeyboardButton('Help')
+    review_button = telebot.types.KeyboardButton('Rate Bot')
+    begin_button = telebot.types.KeyboardButton('Begin')
+    keyboard.add(help_button, review_button, begin_button)
 
-# Обработчик текстовых сообщений
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    bot.reply_to(message, f"Вы написали: {message.text}")
+    if message.text == "Help":
+        bot.send_message(chat_id=message.chat.id, text="Hello, my name is Monica. I'll help you clean your mind:3", reply_markup=keyboard)
 
-# Запуск бота
+
 bot.polling()
